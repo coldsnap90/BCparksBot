@@ -40,7 +40,6 @@ def typeSpeed(element: WebElement,text:str):
 
 #looks for captcha iframe 
 def captchaChecker(check):
-    print('captcha check')
     browser.implicitly_wait(3)
     try:
        browser.find_element(By.TAG_NAME,'iframe')
@@ -63,10 +62,8 @@ def captchaCrush():
     print('frame found')
     itemX = browser.find_element(By.ID,'recaptcha-audio-button')
     clicked = wait(browser,10).until(EC.presence_of_element_located((By.ID,'recaptcha-audio-button'))).click()
-    print(clicked,' 1 ')
     itemX.click()
     browser.implicitly_wait(4)
-    print('Part 2')
     play = browser.find_element(By.XPATH,'/html/body/div/div/div[7]/a').get_attribute('href')
     wait(browser,10).until(EC.presence_of_element_located((By.XPATH,'/html/body/div/div/div[7]/a')))
     urllib.request.urlretrieve(play,'audio.mp3')
@@ -80,14 +77,13 @@ def captchaCrush():
     with sample_sound as source:
         audio = recog.record(source)
         key = recog.recognize_google(audio)
-        print('speech: '+key)
-    print('Waiting for input.....')
+
    
     try:
         words = browser.find_element(By.CSS_SELECTOR,'#audio-response')
         wait(browser,10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'#audio-response')))
         typeSpeed(words,key)
-        print('Verifying....')
+    
         
     
     except:print('Fail to verify')
@@ -231,7 +227,6 @@ while flag == True:
     siteEntryMonthLoader = wait(browser,10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'.ui-datepicker-month')))
     siteEntryMonthNext = browser.find_element(By.CSS_SELECTOR,'.ui-datepicker-next[data-original-title="Next Month"]')
     for text in siteEntryMonthText:
-        print(text.text)
         if(text.text == month): #loops through month text
             text.click()
             flag = False
@@ -247,7 +242,6 @@ while flag == True :
     wait(browser,10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'.ui-datepicker-calendar > tbody > tr > td ')))
     for date in siteEntryDateText:
         if(date.text == day):
-            print(date.text)
             date.click()
             flag = False
             break
